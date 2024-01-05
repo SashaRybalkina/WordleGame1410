@@ -16,7 +16,6 @@ public class Wordle {
 	 * @throws FileNotFoundException: Throws the exception of a filename 
 	 * not being found.
 	 */
-	
 	public static String[] wordsFromFile(String filename) throws FileNotFoundException {
 		File file = new File(filename);
 		Scanner fileScanner = new Scanner(file);
@@ -37,13 +36,10 @@ public class Wordle {
 	 * @param stringArray: An array containing strings.
 	 * @return A random word from the array.
 	 */
-	
-	public static String pickRandomWord(String[] stringArray) {
-		
+	public static String pickRandomWord(String[] stringArray)
+	{
 		Random randomGenerator = new Random();
-		
 		int stringIndex = randomGenerator.nextInt(stringArray.length);
-		
 		return stringArray[stringIndex];
 	}
 	
@@ -55,14 +51,14 @@ public class Wordle {
 	 * @param stringArray: Any given string array.
 	 * @return true if word is found in the array, false otherwise.
 	 */
-	
-	public static boolean wordInArray(String string, String[] stringArray) {
-		
-		for (String arrayString: stringArray) {
-			
+	public static boolean wordInArray(String string, String[] stringArray)
+	{
+		for (String arrayString: stringArray)
+		{	
 			if (arrayString.equals(string))
-				
+			{
 				return true;
+			}
 		}
 		return false;
 	}
@@ -74,31 +70,26 @@ public class Wordle {
 	 * @param stringArray: Any given string array.
 	 * @return The input word of the user.
 	 */
-	
-	public static String getUserGuess(String[] stringArray) {
-		
+	public static String getUserGuess(String[] stringArray)
+	{
 		Scanner scannerInput = new Scanner(System.in);
-		
 		System.out.println("Please enter a five letter word: ");
-		
-		while (true) {
-			
+		while (true)
+		{
 			String input = scannerInput.next();
-			
 			if (input.length() != 5)
+			{
 				System.out.println("Please enter a five letter word: ");
-			
-			else if (input.length() == 5 && !wordInArray(input, stringArray)) {
-				System.out.println("Please enter a five letter word: ");
-				
 			}
-			
-			else if (input.length() == 5 && wordInArray(input, stringArray)) {
+			else if (input.length() == 5 && !wordInArray(input, stringArray)) 
+			{
+				System.out.println("Please enter a five letter word: ");
+			}
+			else if (input.length() == 5 && wordInArray(input, stringArray))
+			{
 				return input;
-
 			}
 		}
-
 	}
 	
 	/**
@@ -108,12 +99,14 @@ public class Wordle {
 	 * @param word: Any given word.
 	 * @return true if character can be found in word, false otherwise.
 	 */
-	
-	public static boolean letterInWord(char character, String word) {
-		
-		for (int index = 0; index < word.length(); index++) {
+	public static boolean letterInWord(char character, String word)
+	{
+		for (int index = 0; index < word.length(); index++)
+		{
 			if (character == word.charAt(index))
+			{
 				return true;
+			}
 		}
 		return false;
 	}
@@ -127,71 +120,57 @@ public class Wordle {
 	 * @param guessWord: Any given guess word.
 	 * @param secretWord: The word the user needs to guess.
 	 */
-	
-	public static void displayMatching(String guessWord, String secretWord) {
-		
+	public static void displayMatching(String guessWord, String secretWord)
+	{
 		String result = "";
-		
-		for (int index = 0; index < guessWord.length(); index++) {
-			
-			if (guessWord.charAt(index) == secretWord.charAt(index)) {	
+		for (int index = 0; index < guessWord.length(); index++)
+		{
+			if (guessWord.charAt(index) == secretWord.charAt(index))
+			{	
 				result += Character.toUpperCase(guessWord.charAt(index));
 			}
-			
-			else if (letterInWord(guessWord.charAt(index), secretWord)) {
+			else if (letterInWord(guessWord.charAt(index), secretWord))
+			{
 				result += guessWord.charAt(index);
 			}
-			
-			else {
+			else 
+			{
 				result += "-";
 			}
-			
 		}
 		System.out.println(result);
 	}
 	
-
-	public static void main(String[] args) {
-		
-		try{
-			
+	public static void main(String[] args)
+	{
+		try {
 			String[] words = wordsFromFile("words.txt");
-			
 			String secretWord = pickRandomWord(words);
-			
 			int sum = 0;
 			
-			while (sum < 6) {
-				
+			while (sum < 6) 
+			{
 				sum++;
-				
 				String guessWord = getUserGuess(words);
 				
-				if (guessWord.equals(secretWord)) {
+				if (guessWord.equals(secretWord))
+				{
 					System.out.println("You Win!");
 					break;
 				}
-				
-				else {
+				else 
+				{
 					displayMatching(guessWord, secretWord);
-
 				}
-			
 			}
-			if (sum == 6
-					) {
-				
+			if (sum == 6) 
+			{
 				System.out.println("Game Over. The secret word was " + secretWord + ".");
-			
 			}
-			
 		}
-		catch (FileNotFoundException e){
-			
+		catch (FileNotFoundException e)
+		{	
 			System.out.println("File not found");
 		}
-
-
 	}
-
 }
